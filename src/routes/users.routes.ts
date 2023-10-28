@@ -1,9 +1,10 @@
 import { Router } from 'express'
 import { loginController, registerController } from '~/controllers/users.controllers'
 import { loginValidator, registerValidator } from '~/middlewares/users.middlewares'
+import { wrapAsync } from '~/utils/handers'
 const usersRouter = Router()
 
-usersRouter.get('/login', loginValidator, loginController)
+usersRouter.get('/login', loginValidator, wrapAsync(loginController))
 /* 
     Description: Register new user
     Path:/register
@@ -17,6 +18,6 @@ usersRouter.get('/login', loginValidator, loginController)
         
     }
 */
-usersRouter.post('/register', registerValidator, registerController)
+usersRouter.post('/register', registerValidator, wrapAsync(registerController))
 
 export default usersRouter
