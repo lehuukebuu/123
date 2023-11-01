@@ -4,11 +4,11 @@ import jwt from 'jsonwebtoken'
 //làm  hàm nhận vào payload, privatekey, options từ đó
 export const signToken = ({
   payload,
-  privatekey = process.env.JWT_SECRET as string,
+  privatekey,
   options = { algorithm: 'HS256' }
 }: {
   payload: string | object | Buffer
-  privatekey?: string
+  privatekey: string
   //thêm ? là nó tự ký
   options: jwt.SignOptions
 }) => {
@@ -21,13 +21,7 @@ export const signToken = ({
 }
 //biến payload, privatekey, options thành object bằng cách thêm {}
 
-export const verifyToken = ({
-  token,
-  secretOrPublicKey = process.env.JWT_SECRET as string
-}: {
-  token: string
-  secretOrPublicKey?: string
-}) => {
+export const verifyToken = ({ token, secretOrPublicKey }: { token: string; secretOrPublicKey: string }) => {
   //trả về JwtPayload(thông tin người gữi req) nếu token hợp lệ
   return new Promise<jwt.JwtPayload>((resolve, reject) => {
     //method này sẽ verify token, nếu token hợp lệ thì nó sẽ trả về payload
